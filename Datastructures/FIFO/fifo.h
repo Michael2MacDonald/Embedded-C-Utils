@@ -83,6 +83,33 @@ fifo_status_t fifo_push32_force(fifo_t *fifo, uint32_t data);
 
 
 /**
+ * Increments the FIFO without writing data, effectively reserving space for an
+ * element and moving the head forward.
+ * Provides the pointer to the reserved space in 'data_ptr' for the caller to
+ * write data directly into the FIFO buffer.
+ * Unsafe because it increments the FIFO before writing data, so the reserved
+ * space could be popped before the caller writes data into it.
+ * Returns FIFO_NULPTR if fifo pointer or data pointer is NULL
+ * Returns FIFO_UNINIT if fifo buffer pointer is NULL
+ * Returns FIFO_FULL if the FIFO is full (i.e. no free space)
+ * In this case, the FIFO will not be modified (i.e. no bytes will be pushed)
+ * Returns FIFO_OK if the data was successfully pushed onto the FIFO
+ */
+fifo_status_t fifo_pre_inc8(fifo_t *fifo, uint8_t** data_ptr);
+/**
+ * Increments the FIFO without writing data, effectively moving the head forward.
+ * Returns a pointer to the next empty space through 'data_ptr' parameter
+ * for the caller to write data directly into before the next post increment.
+ * Returns FIFO_NULPTR if fifo pointer or data pointer is NULL
+ * Returns FIFO_UNINIT if fifo buffer pointer is NULL
+ * Returns FIFO_FULL if the FIFO is full (i.e. no free space)
+ * In this case, the FIFO will not be modified (i.e. no bytes will be pushed)
+ * Returns FIFO_OK if the data was successfully pushed onto the FIFO
+ */
+fifo_status_t fifo_post_inc8(fifo_t *fifo, uint8_t** data_ptr);
+
+
+/**
  * Peaks at the next 8-bit element in the FIFO without modifying the FIFO
  * Returns FIFO_NULPTR if fifo pointer or data pointer is NULL
  * Returns FIFO_UNINIT if fifo buffer pointer is NULL
@@ -203,6 +230,14 @@ size_t fifo_count(fifo_t *fifo);
  * Returns FIFO_OK if the FIFO was successfully cleared
  */
 fifo_status_t fifo_clear(fifo_t *fifo);
+
+/**
+ * Clears the FIFO by resetting head and tail indices
+ * Does not zero out the buffer for improved performance
+ * Returns FIFO_NULPTR if fifo pointer is NULL
+ * Returns FIFO_OK if the FIFO was successfully cleared
+ */
+fifo_status_t fifo_clear_fast(fifo_t *fifo);
 
 
 #endif // FIFO_H

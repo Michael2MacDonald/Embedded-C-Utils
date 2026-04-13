@@ -94,6 +94,27 @@ fifo_status_t fifo_push32_force(fifo_t *fifo, uint32_t data) {
 }
 
 
+fifo_status_t fifo_pre_inc8(fifo_t *fifo, uint8_t** data_ptr) {
+	if (fifo == NULL || data_ptr == NULL) return FIFO_NULPTR;
+	if (fifo->buffer == NULL) return FIFO_UNINIT;
+	size_t next_head = (fifo->head + 1) % fifo->size; // Calculate next head position
+	if (next_head == fifo->tail) return FIFO_FULL;    // Buffer is full
+	*data_ptr = &fifo->buffer[fifo->head]; // Provide pointer to new data position for direct writing
+	fifo->head = next_head; // Move head forward, wrap around if necessary
+	return FIFO_OK;
+}
+
+fifo_status_t fifo_post_inc8(fifo_t *fifo, uint8_t** data_ptr) {
+	if (fifo == NULL || data_ptr == NULL) return FIFO_NULPTR;
+	if (fifo->buffer == NULL) return FIFO_UNINIT;
+	size_t next_head = (fifo->head + 1) % fifo->size; // Calculate next head position
+	if (next_head == fifo->tail) return FIFO_FULL;    // Buffer is full
+	fifo->head = next_head; // Move head forward, wrap around if necessary
+	*data_ptr = &fifo->buffer[fifo->head]; // Provide pointer to next data position for direct writing
+	return FIFO_OK;
+}
+
+
 static inline void _fifo_pop_byte(fifo_t *fifo, uint8_t *data) {
 	*data = fifo->buffer[fifo->tail];
 	fifo->tail = (fifo->tail + 1) % fifo->size;
@@ -247,6 +268,13 @@ fifo_status_t fifo_clear(fifo_t *fifo) {
 	if (fifo->buffer == NULL) return FIFO_UNINIT;
 	for (size_t i = 0; i < fifo->size; i++)
 		fifo->buffer[i] = 0;
+	fifo->head = 0;
+	fifo->tail = 0;
+	return FIFO_OK;
+}
+
+fifo_status_t fifo_clear_fast(fifo_t *fifo) {
+	if (fifo == NULL) return FIFO_NULPTR;
 	fifo->head = 0;
 	fifo->tail = 0;
 	return FIFO_OK;
