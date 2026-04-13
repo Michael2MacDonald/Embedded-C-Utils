@@ -5,21 +5,21 @@
 
 
 typedef struct {
-    uint8_t* buffer;
-    size_t size;
-    size_t head;
-    size_t tail;
+	uint8_t* buffer;
+	size_t size;
+	size_t head;
+	size_t tail;
 } fifo_t;
 
 typedef enum {
-    FIFO_OK = 0, // Operation successful
-    FIFO_NULPTR, // Null pointer passed as argument
-    FIFO_UNINIT, // FIFO not initialized
-    FIFO_BADARG, // Invalid argument (e.g. size == 0 or not divisible by data size)
-    FIFO_EMPTY,  // FIFO empty; Pop operation aborted
-    FIFO_FULL,   // FIFO full; Push operation aborted without modifying FIFO
-    FIFO_OVRFLW, // FIFO full; Oldest data overwritten
-    FIFO_UNDRFLW // FIFO length less than requested pop count, but not empty; Pop operation aborted without modifying FIFO
+	FIFO_OK = 0, // Operation successful
+	FIFO_NULPTR, // Null pointer passed as argument
+	FIFO_UNINIT, // FIFO not initialized
+	FIFO_BADARG, // Invalid argument (e.g. size == 0 or not divisible by data size)
+	FIFO_EMPTY,  // FIFO empty; Pop operation aborted
+	FIFO_FULL,   // FIFO full; Push operation aborted without modifying FIFO
+	FIFO_OVRFLW, // FIFO full; Oldest data overwritten
+	FIFO_UNDRFLW // FIFO length less than requested pop count, but not empty; Pop operation aborted without modifying FIFO
 } fifo_status_t;
 
 
