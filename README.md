@@ -1,9 +1,12 @@
 # Embedded-C-Utils
 
-A collection of generic and reusable code for embedded C applications. Includes datastructures, helpful utilities, and libraries for solving common problems without reinventing the wheel. Currently a work in progress.
+A collection of common and useful code for embedded C applications. Includes data structures, utilities, and libraries for solving common problems without reinventing the wheel.
+
+> [!WARNING]
+> 🚧 Under Development 🚧
 
 ## Table Of Contents
 
-- `/Datastructures`: Common datastructures
-    - `/FIFO`: Basic FIFO using byte array
+- `/Datastructures/`: Common datastructures
+    - `FIFO/`: Basic FIFO using byte array
 
