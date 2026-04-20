@@ -2,6 +2,7 @@
 #define FIFO_H
 
 #include <stdint.h>
+#include <stddef.h> // size_t
 
 
 typedef struct {
@@ -172,7 +173,7 @@ fifo_status_t fifo_pop32(fifo_t *fifo, uint32_t *data);
  * Returns FIFO_EMPTY if the FIFO is empty
  * Returns FIFO_OK if the data was successfully popped
  */
-fifo_status_t fifo_pop8(fifo_t *fifo);
+fifo_status_t fifo_drop8(fifo_t *fifo);
 /**
  * Pops the next 16-bit element from the FIFO and discards it
  * Returns FIFO_NULPTR if fifo pointer is NULL
@@ -181,7 +182,7 @@ fifo_status_t fifo_pop8(fifo_t *fifo);
  * Returns FIFO_UNDRFLW if the FIFO does not have enough data to pop a full 16-bit element (i.e. less than 2 bytes of data)
  * Returns FIFO_OK if the data was successfully popped
  */
-fifo_status_t fifo_pop16(fifo_t *fifo);
+fifo_status_t fifo_drop16(fifo_t *fifo);
 /**
  * Pops the next 32-bit element from the FIFO and discards it
  * Returns FIFO_NULPTR if fifo pointer is NULL
@@ -190,7 +191,7 @@ fifo_status_t fifo_pop16(fifo_t *fifo);
  * Returns FIFO_UNDRFLW if the FIFO does not have enough data to pop a full 32-bit element (i.e. less than 4 bytes of data)
  * Returns FIFO_OK if the data was successfully popped
  */
-fifo_status_t fifo_pop32(fifo_t *fifo);
+fifo_status_t fifo_drop32(fifo_t *fifo);
 
 
 // /* Pops <count> elements of type uint8_t from the FIFO into the provided buffer */

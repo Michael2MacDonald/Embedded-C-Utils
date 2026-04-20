@@ -1,5 +1,6 @@
 #include "fifo.h"
 
+#include <stdint.h>
 
 fifo_status_t fifo_init(fifo_t *fifo, uint8_t *buffer, size_t size) {
 	// TODO: Check that fifo is uninitialized (e.g. buffer == NULL) before initializing
@@ -156,7 +157,7 @@ fifo_status_t fifo_pop32(fifo_t *fifo, uint32_t *data) {
 }
 
 
-fifo_status_t fifo_pop8(fifo_t *fifo) {
+fifo_status_t fifo_drop8(fifo_t *fifo) {
 	if (fifo == NULL) return FIFO_NULPTR;
 	if (fifo->buffer == NULL) return FIFO_UNINIT;
 	if (fifo->head == fifo->tail) return FIFO_EMPTY; // Buffer is empty
@@ -164,7 +165,7 @@ fifo_status_t fifo_pop8(fifo_t *fifo) {
 	return FIFO_OK;
 }
 
-fifo_status_t fifo_pop16(fifo_t *fifo) {
+fifo_status_t fifo_drop16(fifo_t *fifo) {
 	if (fifo == NULL) return FIFO_NULPTR;
 	if (fifo->buffer == NULL) return FIFO_UNINIT;
 	if (fifo->head == fifo->tail) return FIFO_EMPTY; // Buffer is empty
@@ -175,7 +176,7 @@ fifo_status_t fifo_pop16(fifo_t *fifo) {
 	return FIFO_OK;
 }
 
-fifo_status_t fifo_pop32(fifo_t *fifo) {
+fifo_status_t fifo_drop32(fifo_t *fifo) {
 	if (fifo == NULL) return FIFO_NULPTR;
 	if (fifo->buffer == NULL) return FIFO_UNINIT;
 	if (fifo->head == fifo->tail) return FIFO_EMPTY; // Buffer is empty
