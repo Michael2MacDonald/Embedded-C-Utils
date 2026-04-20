@@ -1,5 +1,6 @@
 #include "fifo.h"
 
+#include <stdint.h>
 
 fifo_status_t fifo_init(fifo_t *fifo, uint8_t *buffer, size_t size) {
 	// TODO: Check that fifo is uninitialized (e.g. buffer == NULL) before initializing
