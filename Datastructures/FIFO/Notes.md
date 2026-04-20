@@ -14,7 +14,7 @@ A good compiler will automatically convert the modulo to the faster AND operatio
 
 
 
-## Ensure that FIFO is interupt safe
+## Ensure that FIFO is interrupt safe
 
 there are a couple of details you should be aware of:  
 
